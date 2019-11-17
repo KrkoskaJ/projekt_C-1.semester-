@@ -63,7 +63,7 @@ int main() {
 
 	
 
-	int dlzka = 0;;
+	int dlzka;
 
 	while (znak != 'k') {
 		scanf("%c", &znak);
@@ -72,7 +72,7 @@ int main() {
 
 
 		if (znak == 'n') {
-			nacitaj(&load, fr,dlzka);
+			nacitaj(load, fr,&dlzka);
 		}
 
 

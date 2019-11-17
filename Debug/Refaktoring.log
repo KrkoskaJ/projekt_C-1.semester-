@@ -1,7 +1,3 @@
 ﻿  Source.c
-C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(75,17): warning C4047: 'function': 'char *' differs in levels of indirection from 'char (*)[1000]'
-C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(75,17): warning C4024: 'nacitaj': different types for formal and actual parameter 1
-C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(75,27): warning C4047: 'function': 'int *' differs in levels of indirection from 'int'
-C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(75,27): warning C4024: 'nacitaj': different types for formal and actual parameter 3
 C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(54,7): warning C4101: 'change': unreferenced local variable
   Refaktoring.vcxproj -> C:\Users\Acer\source\repos\Refaktoring\Debug\Refaktoring.exe
