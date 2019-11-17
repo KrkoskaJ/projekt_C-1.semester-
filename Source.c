@@ -5,28 +5,65 @@
 
 
 
+void nacitaj(char *load, FILE*fr,int *dlzka ) {
+	*dlzka = 0;
+	int d;
 
 
+	while ((d = getc(fr)) != EOF && *dlzka<1000) {
+		*load = d;
+		load++;
+		(*dlzka)++;
+	}
+	
+	if (*dlzka == 0) {
+		printf("Spravu sa nepodarilo nacitat.\n");}
+	else {
+		rewind(fr);	
+	}
+
+
+}
+
+void vypis(char *vypisat, int dlzka){
+	
+	if (dlzka == 0) {
+		printf("Subor nieje nacitany.");
+	
+	}
+
+
+	else {
+		for (int a = 0; a < dlzka; a++) {
+			printf("%c", vypisat[a]);
+
+		}
+	}
+	printf("\n");
+
+
+
+}
 
 
 int main() {
 
 	char znak = 0;
-	int dlzka = 0;
 
 	char load[pole];
 	char change[pole];
 
 	FILE* fr;
-	FILE* fr2;
-
 	fr = fopen("sifra.txt", "r");
-	fr2 = fopen("sifra.txt", "r");
 
 
 
 
 
+
+	
+
+	int dlzka = 0;;
 
 	while (znak != 'k') {
 		scanf("%c", &znak);
@@ -35,40 +72,17 @@ int main() {
 
 
 		if (znak == 'n') {
-			dlzka = 0;
-			int d;
-
-			while ((d = getc(fr)) != EOF && dlzka < 1000) {
-				load[dlzka] = d;
-				dlzka++;
-
-			}
-			if (dlzka == 0) {
-				printf("Spravu sa nepodarilo nacitat.");
-			}
-			else {
-				rewind(fr);
-			}
+			nacitaj(&load, fr,dlzka);
 		}
 
-		if (znak == 'v') {
-			if (dlzka == 0) {
-				printf("Sprava nieje nacitana.");
-			}
 
-			else {
-				for (int a = 0; a < dlzka; a++) {
-					printf("%c", load[a]);
-				}
-			}
-
-
-
-			printf("\n");
+		if (znak == 'v') {	
+			vypis(load, dlzka);
 		}
 
 
 
+		/*
 		if (znak == 'u') {
 			int b = 0;;
 			if (dlzka == 0) {
@@ -103,7 +117,7 @@ int main() {
 
 
 
-		}
+		}*/
 
 	}
 
