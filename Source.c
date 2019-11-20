@@ -25,7 +25,7 @@ void nacitaj(char *load, FILE*fr,int *dlzka ) {
 
 }
 
-void vypis(char *vypisat, int dlzka){
+void vypis(char *vypisat, int *dlzka){
 	
 	if (dlzka == 0) {
 		printf("Subor nieje nacitany.");
@@ -46,84 +46,205 @@ void vypis(char *vypisat, int dlzka){
 }
 
 
-int main() {
-
-	char znak = 0;
-
-	char load[pole];
-	char change[pole];
-
-	FILE* fr;
-	fr = fopen("sifra.txt", "r");
+void uprav(char* load, char* change, int dlzka,int *u_dlzka) {
 
 
+	if (dlzka == 0) {
+		printf("Sprava nieje nacitana.\n");
+	}
+
+	else {
+		*u_dlzka = 0;
+		for (int a = 0; a < dlzka; a++) {
+			if (load[a] >= 'a' && load[a] <= 'z') {
+				change[*u_dlzka] = load[a] - 32;
+				(*u_dlzka)++;
+			}
+
+			else if (load[a] >= 'A' && load[a] <= 'Z') {
+				change[*u_dlzka] = load[a];
+				(*u_dlzka)++;
+			}
+		}
+		
 
 
 
+	}
+}
+
+void vypis_uprav(char change[], int u_dlzka) {
+	if (u_dlzka == 0) {
+		printf("Upravena sprava nieje nacitana.\n");
+	}
+	else {
+		for (int a = 0; a < u_dlzka; a++) {
+			printf("%c", change[a]);
+		}
+		printf("\n");
+	}
+
+}
+
+
+void dlzka_slova(FILE*fr,int dlzka) {
+
+	char znaky[pole];
+	int pomoc = 0;
+	int d,k;
+
+	if (dlzka == 0) {
+		printf("Sprava nieje nacitana.\n");
+	}
+
+	else {
+		scanf("%d", &k);
+		getchar();
+
+		rewind(fr);
+		while ((d = getc(fr)) != EOF) {
+
+
+
+			if (d != '\n' && d != ' ') {
+				znaky[pomoc] = d;
+				pomoc++;
+			}
+			if (pomoc == k && (d == '\n' || d == ' ')) {
+
+				for (int a = 0; a < pomoc; a++) {
+					printf("%c", znaky[a]);
+				}
+				printf("\n");
+				for (int a = 0; a < pomoc; a++) {
+					znaky[pomoc] = 0;
+				}
+
+			}
+
+
+
+			else if (pomoc != k && (d == '\n' || d == ' ')) {
+				for (int a = 0; a < pomoc; a++) {
+					znaky[a] = 0;
+				}
+
+				pomoc = 0;
+			}
+
+
+		}
+
+		if (pomoc == k) {
+			for (int a = 0; a < pomoc; a++) {
+				printf("%c", znaky[a]);
+			}
+			printf("\n");
+		}
+
+	}
+
+}
+
+
+void histogram(char change[],int u_dlzka) {
+
+	char znaky[26];
+	float pomoc = 0;
+	for (int a = 0; a < 26; a++) {
+		znaky[a] = 0;
+	}
+
+		for (int b = 0; b < u_dlzka; b++) {
+			pomoc++;
+			if (change[b] >= 'A' && change[b] <= 'Z') {
+				znaky[change[b]-'A']++;
+			}
+			else {
+				znaky[b] = 0;
+			}
+		
+
+		}
+		
 
 	
+	int pomoc2 = 0;
+	for (float b = 0; b < 100; b = b + 10) {
+		for (int a = 0; a < u_dlzka; a++) {
+			if (znaky[a] != 0) {
+				if (((znaky[a]) > ((pomoc / 100) * b))) {
+					printf("*");
+					pomoc2++;
+				}
+			}
+			else if(znaky[a]==0) {
+				printf(" ");
 
-	int dlzka;
+			}
+		}
+		if (pomoc2 != 0) {
+			printf("\n");
+			pomoc2 = 0;
+		}
+	}	
+	printf("\n");
+	for (int a = 0; a < 26; a++) {
+		printf("%c", 'A' + a);
+	}
+	
+}
+
+
+
+
+
+
+int main() {
+
+
+	char znak = 0;
+	char load[pole];
+	char change[pole];
+	FILE* fr;
+	fr = fopen("sifra.txt", "r");
+	int dlzka=0;
+	int u_dlzka=0;
 
 	while (znak != 'k') {
 		scanf("%c", &znak);
 		getchar();
 
 
+		switch (znak) {
 
-		if (znak == 'n') {
-			nacitaj(load, fr,&dlzka);
-		}
+		case 'n':
+			nacitaj(load, fr, &dlzka);
+			break;
 
-
-		if (znak == 'v') {	
+		case 'v':
 			vypis(load, dlzka);
-		}
+			break;
 
+		case 'u':
+			uprav(load, change, dlzka, &u_dlzka);
+			break;
 
+		case 's':
+			vypis_uprav(change, u_dlzka);
+			break;
 
-		/*
-		if (znak == 'u') {
-			int b = 0;;
-			if (dlzka == 0) {
-				printf("Sprava nieje nacitana.\n");
-			}
+		case 'd':
+			dlzka_slova(fr,dlzka);
+			break;
 
+		case 'h':
+			histogram(change,u_dlzka);
+			break;
 
-
-			else {
-				for (int a = 0; a < dlzka; a++) {
-					if (load[a] >= 'a' && load[a] <= 'z') {
-						change[b] = load[a] - 32;
-						b++;
-					}
-					else if (load[a] >= 'A' && load[a] <= 'Z') {
-						change[b] = load[a];
-						b++;
-					}
-
-
-
-				}
-			}
-
-
-
-		}
-
-
-		if (znak == 's') {
-
-
-
-
-		}*/
+		}	
 
 	}
-
-
-
-
 	return 0;
 
 }

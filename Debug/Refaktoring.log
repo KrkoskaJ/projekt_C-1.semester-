@@ -1,3 +1,5 @@
 ﻿  Source.c
-C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(54,7): warning C4101: 'change': unreferenced local variable
+C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(37,28): warning C4047: '<': 'int' differs in levels of indirection from 'int *'
+C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(226,21): warning C4047: 'function': 'int *' differs in levels of indirection from 'int'
+C:\Users\Acer\source\repos\Refaktoring\Refaktoring\Source.c(226,21): warning C4024: 'vypis': different types for formal and actual parameter 2
   Refaktoring.vcxproj -> C:\Users\Acer\source\repos\Refaktoring\Debug\Refaktoring.exe
