@@ -9,26 +9,33 @@ void nacitaj(char *load, FILE*fr,int *dlzka ) {
 	*dlzka = 0;
 	int d;
 
-
-	while ((d = getc(fr)) != EOF && *dlzka<1000) {
-		*load = d;
-		load++;
-		(*dlzka)++;
+	if (fr == NULL) {
+		printf("Spravu sa nepodarilo nacitat.\n");
+		return 0;
 	}
-	
-	if (*dlzka == 0) {
-		printf("Spravu sa nepodarilo nacitat.\n");}
+
 	else {
-		rewind(fr);	
+
+		while ((d = getc(fr)) != EOF && *dlzka < 1000) {
+			*load = d;
+			load++;
+			(*dlzka)++;
+		}
+
+		if (*dlzka == 0) {
+			printf("Spravu sa nepodarilo nacitat.\n");
+		}
+		else {
+			rewind(fr);
+		}
+
 	}
-
-
 }
 
 void vypis(char *vypisat, int *dlzka){
 	
 	if (dlzka == 0) {
-		printf("Subor nieje nacitany.");
+		printf("Sprava nieje nacitana.\n");
 	
 	}
 
@@ -38,13 +45,13 @@ void vypis(char *vypisat, int *dlzka){
 			printf("%c", vypisat[a]);
 
 		}
+		printf("\n");
 	}
-	printf("\n");
+	
 
 
 
 }
-
 
 void uprav(char* load, char* change, int dlzka,int *u_dlzka) {
 
@@ -85,7 +92,6 @@ void vypis_uprav(char change[], int u_dlzka) {
 	}
 
 }
-
 
 void dlzka_slova(FILE*fr,int dlzka) {
 
@@ -146,56 +152,86 @@ void dlzka_slova(FILE*fr,int dlzka) {
 
 }
 
-
 void histogram(char change[],int u_dlzka) {
 
 	char znaky[26];
 	float pomoc = 0;
-	for (int a = 0; a < 26; a++) {
-		znaky[a] = 0;
+	if (u_dlzka == 0) {
+		printf("Nieje k dispozicii upravena sprava.\n");
 	}
+	else {
+		for (int a = 0; a < 26; a++) {
+			znaky[a] = 0;
+		}
 
 		for (int b = 0; b < u_dlzka; b++) {
 			pomoc++;
 			if (change[b] >= 'A' && change[b] <= 'Z') {
-				znaky[change[b]-'A']++;
+				znaky[change[b] - 'A']++;
 			}
 			else {
 				znaky[b] = 0;
 			}
-		
+
 
 		}
-		
 
-	
-	int pomoc2 = 0;
-	for (float b = 0; b < 100; b = b + 10) {
-		for (int a = 0; a < u_dlzka; a++) {
-			if (znaky[a] != 0) {
-				if (((znaky[a]) > ((pomoc / 100) * b))) {
-					printf("*");
-					pomoc2++;
+
+
+		int pomoc2 = 0;
+		for (float b = 0; b < 100; b = b + 10) {
+			for (int a = 0; a < u_dlzka; a++) {
+				if (znaky[a] != 0) {
+					if (((znaky[a]) > ((pomoc / 100) * b))) {
+						printf("*");
+						pomoc2++;
+					}
+				}
+				else if (znaky[a] == 0) {
+					printf(" ");
+
 				}
 			}
-			else if(znaky[a]==0) {
-				printf(" ");
-
+			if (pomoc2 != 0) {
+				printf("\n");
+				pomoc2 = 0;
 			}
 		}
-		if (pomoc2 != 0) {
-			printf("\n");
-			pomoc2 = 0;
+		printf("\n");
+		for (int a = 0; a < 26; a++) {
+			printf("%c", 'A' + a);
 		}
-	}	
-	printf("\n");
-	for (int a = 0; a < 26; a++) {
-		printf("%c", 'A' + a);
+		printf("\n");
 	}
-	
 }
 
+void cezarova_sifra(char* change, int*u_dlzka) {
 
+	int n;
+	scanf("%d", &n);
+	getchar();
+
+	if (n >= 1 && n <= 25 && u_dlzka>0) {
+		for (int a = 0; a < u_dlzka; a++) {
+			if (change[a] < 'E') {
+				change[a] = change[a] + 26 - n;
+				printf("%c", change[a]);
+			}
+			else {
+				change[a] = change[a] - n;
+				printf("%c", change[a]);
+			}
+			printf("\n");
+		}
+
+	}
+	else {
+		printf("Nieje k dispozicii upravena sprava.\n");
+	}
+
+
+
+}
 
 
 
@@ -242,6 +278,9 @@ int main() {
 			histogram(change,u_dlzka);
 			break;
 
+		case 'c':
+			cezarova_sifra(change, u_dlzka);
+			break;
 		}	
 
 	}
