@@ -5,13 +5,12 @@
 
 
 
-void nacitaj(char *load, FILE*fr,int *dlzka ) {
+void nacitaj(char* load, FILE* fr, int* dlzka) {
 	*dlzka = 0;
 	int d;
 
 	if (fr == NULL) {
 		printf("Spravu sa nepodarilo nacitat.\n");
-		return 0;
 	}
 
 	else {
@@ -32,11 +31,11 @@ void nacitaj(char *load, FILE*fr,int *dlzka ) {
 	}
 }
 
-void vypis(char *vypisat, int *dlzka){
-	
+void vypis(char* vypisat, int dlzka) {
+
 	if (dlzka == 0) {
 		printf("Sprava nieje nacitana.\n");
-	
+
 	}
 
 
@@ -47,13 +46,13 @@ void vypis(char *vypisat, int *dlzka){
 		}
 		printf("\n");
 	}
-	
+
 
 
 
 }
 
-void uprav(char* load, char* change, int dlzka,int *u_dlzka) {
+void uprav(char* load, char* change, int dlzka, int* u_dlzka) {
 
 
 	if (dlzka == 0) {
@@ -73,7 +72,7 @@ void uprav(char* load, char* change, int dlzka,int *u_dlzka) {
 				(*u_dlzka)++;
 			}
 		}
-		
+
 
 
 
@@ -93,11 +92,13 @@ void vypis_uprav(char change[], int u_dlzka) {
 
 }
 
-void dlzka_slova(FILE*fr,int dlzka) {
+void dlzka_slova(char load[], int dlzka) {
 
 	char znaky[pole];
 	int pomoc = 0;
-	int d,k;
+	int k;
+
+
 
 	if (dlzka == 0) {
 		printf("Sprava nieje nacitana.\n");
@@ -107,30 +108,32 @@ void dlzka_slova(FILE*fr,int dlzka) {
 		scanf("%d", &k);
 		getchar();
 
-		rewind(fr);
-		while ((d = getc(fr)) != EOF) {
+		for (int b = 0; b < dlzka; b++) {
 
 
 
-			if (d != '\n' && d != ' ') {
-				znaky[pomoc] = d;
+			if (load[b] != '\n' && load[b] != ' ') {
+				znaky[pomoc] = load[b];
 				pomoc++;
 			}
-			if (pomoc == k && (d == '\n' || d == ' ')) {
+
+
+			if (((pomoc) == k) && (load[b] == '\n' || load[b] == ' ')) {
 
 				for (int a = 0; a < pomoc; a++) {
 					printf("%c", znaky[a]);
 				}
 				printf("\n");
 				for (int a = 0; a < pomoc; a++) {
-					znaky[pomoc] = 0;
+					znaky[a] = 0;
 				}
+				pomoc = 0;
 
 			}
 
 
 
-			else if (pomoc != k && (d == '\n' || d == ' ')) {
+			if (pomoc != k && (load[b] == '\n' || load[b] == ' ')) {
 				for (int a = 0; a < pomoc; a++) {
 					znaky[a] = 0;
 				}
@@ -152,7 +155,7 @@ void dlzka_slova(FILE*fr,int dlzka) {
 
 }
 
-void histogram(char change[],int u_dlzka) {
+void histogram(char change[], int u_dlzka) {
 
 	char znaky[26];
 	float pomoc = 0;
@@ -180,14 +183,17 @@ void histogram(char change[],int u_dlzka) {
 
 		int pomoc2 = 0;
 		for (float b = 0; b < 100; b = b + 10) {
-			for (int a = 0; a < u_dlzka; a++) {
+			for (int a = 0; a < 26; a++) {
 				if (znaky[a] != 0) {
 					if (((znaky[a]) > ((pomoc / 100) * b))) {
 						printf("*");
 						pomoc2++;
 					}
 				}
-				else if (znaky[a] == 0) {
+					
+			
+
+				if (znaky[a] == 0|| (znaky[a]) < ((pomoc / 100) * b)|| (znaky[a]) == ((pomoc / 100) * b))   {
 					printf(" ");
 
 				}
@@ -205,31 +211,36 @@ void histogram(char change[],int u_dlzka) {
 	}
 }
 
-void cezarova_sifra(char* change, int*u_dlzka) {
+void cezarova_sifra(char* change, int u_dlzka) {
 
-	int n;
-	scanf("%d", &n);
-	getchar();
 
-	if (n >= 1 && n <= 25 && u_dlzka>0) {
-		for (int a = 0; a < u_dlzka; a++) {
-			if (change[a] < 'E') {
-				change[a] = change[a] + 26 - n;
-				printf("%c", change[a]);
-			}
-			else {
-				change[a] = change[a] - n;
-				printf("%c", change[a]);
+
+	if (u_dlzka > 0) {
+		int n;
+		scanf("%d", &n);
+		getchar();
+
+		if (n >= 1 && n <= 25) {
+			for (int a = 0; a < u_dlzka; a++) {
+				if ((change[a] - n) < 65) {
+					change[a] = change[a] + 26 - n;
+					printf("%c", change[a]);
+				}
+				else {
+					change[a] = change[a] - n;
+					printf("%c", change[a]);
+				}
+
 			}
 			printf("\n");
+
 		}
 
 	}
+
 	else {
 		printf("Nieje k dispozicii upravena sprava.\n");
 	}
-
-
 
 }
 
@@ -244,8 +255,8 @@ int main() {
 	char change[pole];
 	FILE* fr;
 	fr = fopen("sifra.txt", "r");
-	int dlzka=0;
-	int u_dlzka=0;
+	int dlzka = 0;
+	int u_dlzka = 0;
 
 	while (znak != 'k') {
 		scanf("%c", &znak);
@@ -271,18 +282,23 @@ int main() {
 			break;
 
 		case 'd':
-			dlzka_slova(fr,dlzka);
+			dlzka_slova(load, dlzka);
 			break;
 
 		case 'h':
-			histogram(change,u_dlzka);
+			histogram(change, u_dlzka);
 			break;
 
 		case 'c':
 			cezarova_sifra(change, u_dlzka);
 			break;
-		}	
+		}
 
+	}
+	if (znak == 'k') {
+		if (fclose(fr) == EOF) {
+			printf("Subor nebol spravne zatvoreny.\n");
+		}
 	}
 	return 0;
 
