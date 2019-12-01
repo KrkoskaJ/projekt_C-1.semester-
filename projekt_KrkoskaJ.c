@@ -1,3 +1,4 @@
+//Krkoska Jakub
 #include<stdio.h>
 
 #define pole 1000
@@ -190,10 +191,10 @@ void histogram(char change[], int u_dlzka) {
 						pomoc2++;
 					}
 				}
-					
-			
 
-				if (znaky[a] == 0|| (znaky[a]) < ((pomoc / 100) * b)|| (znaky[a]) == ((pomoc / 100) * b))   {
+
+
+				if (znaky[a] == 0 || (znaky[a]) < ((pomoc / 100) * b) || (znaky[a]) == ((pomoc / 100) * b)) {
 					printf(" ");
 
 				}
@@ -244,7 +245,69 @@ void cezarova_sifra(char* change, int u_dlzka) {
 
 }
 
+void odzadu(char* vypis, int dlzka) {
 
+
+	if (dlzka == 0) {
+		printf("Sprava nieje nacitana.\n");
+
+	}
+
+
+	else {
+		for (int a = dlzka - 1; a > -1; a--) {
+			if ((vypis[a] < 'a' && vypis[a]>'z')) {
+				vypis[a] = '*';
+			}
+			else if ((vypis[a] < 'A' && vypis[a] < 'Z')) {
+				vypis[a] = '*';
+			}
+			printf("%c", vypis[a]);
+		}
+		printf("\n");
+	}
+
+
+}
+
+
+void retazec(char change[], int u_dlzka) {
+
+
+
+	int i = 0;
+
+	char r[1000];
+
+	scanf("%d", &i);
+	getchar();
+
+	scanf("%s", r);
+	getchar();
+
+	int dlzka = strlen(r);
+
+	int o = i + dlzka;
+
+	int l = u_dlzka - dlzka;
+
+	for (int a = 0; a <= u_dlzka - i; a++) {
+
+		change[u_dlzka + dlzka - a] = change[u_dlzka - a];
+
+	}
+
+
+	for (int a = 0; a < dlzka; a++) {
+		change[i + a] = r[a];
+	}
+
+	for (int a = 0; a < u_dlzka + dlzka; a++) {
+		printf("%c", change[a]);
+	}
+
+
+}
 
 
 int main() {
@@ -292,6 +355,14 @@ int main() {
 		case 'c':
 			cezarova_sifra(change, u_dlzka);
 			break;
+
+		case 'p':
+			odzadu(load, dlzka);
+			break;
+
+		case 'z':
+			retazec(change, u_dlzka);
+			break;
 		}
 
 	}
@@ -300,6 +371,8 @@ int main() {
 			printf("Subor nebol spravne zatvoreny.\n");
 		}
 	}
+
+
 	return 0;
 
 }
