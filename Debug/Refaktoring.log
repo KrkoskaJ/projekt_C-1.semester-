@@ -1,2 +1,3 @@
-﻿  Source.c
+﻿  projekt_KrkoskaJ.c
+C:\Users\Acer\source\repos\Refaktoring\Refaktoring\projekt_KrkoskaJ.c(288,20): warning C4013: 'strlen' undefined; assuming extern returning int
   Refaktoring.vcxproj -> C:\Users\Acer\source\repos\Refaktoring\Debug\Refaktoring.exe

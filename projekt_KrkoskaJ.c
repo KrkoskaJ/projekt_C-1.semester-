@@ -305,6 +305,7 @@ void retazec(char change[], int u_dlzka) {
 	for (int a = 0; a < u_dlzka + dlzka; a++) {
 		printf("%c", change[a]);
 	}
+	printf("\n");
 
 
 }

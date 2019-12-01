@@ -15,8 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="projekt_KrkoskaJ.c">
+      <Filter>Source Files\Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
